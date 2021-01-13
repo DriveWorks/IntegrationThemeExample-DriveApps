@@ -16,7 +16,7 @@ A distributable template that renders a list of available DriveApps to be run - 
 
 2. Enter your Integration Theme details into `config.js`
     * `serverUrl` - The URL that hosts your Integration Theme, including any ports.
-    * `groupAlias` - The public alias created for the Group containing the project to render - as configured in DriveWorksConfigUser.xml.
+    * `groupAlias` - The public alias created for the Group containing the DriveApps to render - as configured in DriveWorksConfigUser.xml.
         * This *must* be specified for each Group you wish to use.
         * This allows you to mask the true Group name publicly, if desired.
         * See [Integration Theme Settings](https://docs.driveworkspro.com/Topic/IntegrationThemeSettings) for additional guidance.
