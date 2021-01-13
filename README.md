@@ -4,6 +4,9 @@
 
 A distributable template that renders a list of available DriveApps to be run - controlled via a config file.
 
+Please note: DriveWorks are not accepting pull requests for this example.  
+Join our [online community](https://my.driveworks.co.uk) for discussion, resources and to suggest other examples.
+
 ### This example:
 - Renders a list of available DriveApps
 - When selected, the DriveApp is rendered on a separate page/tab (run.html)
