@@ -2,22 +2,32 @@ const SERVER_URL = config.serverUrl;
 const GROUP_ALIAS = config.groupAlias;
 const CREDENTIALS = config.credentials;
 
-const FORM_OUTPUT = document.querySelector("#form-output");
+const FORM_OUTPUT = document.getElementById("form-output");
 
 // Get url query
 const URL_QUERY = new URLSearchParams(window.location.search);
 const APP_ALIAS = URL_QUERY.get("app");
 
 // Create DriveWorks API client
-const DW_CLIENT = new window.DriveWorksLiveClient(SERVER_URL, {downloadStyle: "header"});
+let DW_CLIENT;
+async function dwClientLoaded() {
+    try {
+        DW_CLIENT = new window.DriveWorksLiveClient(SERVER_URL);
+    } catch (error) {
+        console.log(error);
+        FORM_OUTPUT.innerHTML = errorWithBackLink("Client could not be found.");
+        return;
+    }
 
-// Run on load
-(async function () {
+    init();
+}
+
+async function init() {
 
     // Check and set stored session id
     const sessionId = localStorage.getItem("sessionId");
     if (!sessionId) {
-        FORM_OUTPUT.innerHTML = errorWithBackLink("Session Id not found. Please login.");
+        FORM_OUTPUT.innerHTML = errorWithBackLink("Session Id not found. Return to list to login.");
         return;
     }
     DW_CLIENT._sessionId = sessionId;
@@ -30,12 +40,10 @@ const DW_CLIENT = new window.DriveWorksLiveClient(SERVER_URL, {downloadStyle: "h
     }
 
     FORM_OUTPUT.innerHTML = errorWithBackLink("Please provide the name of a DriveApp.");
-
-})();
+}
 
 // Run a DriveApp
 async function runDriveApp(appAlias) {
-
     try {
 
         // Run DriveApp
@@ -47,12 +55,10 @@ async function runDriveApp(appAlias) {
         // Render DriveApp Form
         await driveApp.render(FORM_OUTPUT);
         pingDriveApp(driveApp);
-
     } catch (error) {
         console.log(error);
         FORM_OUTPUT.innerHTML = errorWithBackLink(error);
     }
-
 }
 
 // Generate error with "Back" link
@@ -72,7 +78,6 @@ function errorWithBackLink(message) {
  * @param driveApp The DriveApp object.
  */
 function pingDriveApp(driveApp) {
-
     // Disable ping if interval is 0
     if (config.driveAppPingInterval === 0) {
         return;
@@ -83,5 +88,4 @@ function pingDriveApp(driveApp) {
 
     // Schedule next ping
     setTimeout(pingDriveApp, config.driveAppPingInterval * 1000, driveApp);
-
 }
