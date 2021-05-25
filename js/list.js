@@ -3,14 +3,24 @@ const SERVER_URL = config.serverUrl;
 const GROUP_ALIAS = config.groupAlias;
 const CREDENTIALS = config.credentials;
 
-const APP_LIST = document.querySelector("#app-list");
+const APP_LIST = document.getElementById("app-list");
 
 // Create DriveWorks API client
-const DW_CLIENT = new window.DriveWorksLiveClient(SERVER_URL);
+let DW_CLIENT;
+async function dwClientLoaded() {
+    try {
+        DW_CLIENT = new window.DriveWorksLiveClient(SERVER_URL);
+    } catch (error) {
+        console.log(error);
+        APP_LIST.innerHTML = "Client could not be found.";
+        return;
+    }
+
+    init();
+}
 
 // Run on load
-(async function () {
-
+async function init() {
     try {
 
         // Login to Group
@@ -18,18 +28,15 @@ const DW_CLIENT = new window.DriveWorksLiveClient(SERVER_URL);
         localStorage.setItem("sessionId", session.sessionId);
 
         getDriveApps();
-
     } catch (error) {
         console.log(error);
         APP_LIST.innerHTML = "A login error occurred.";
     }
+}
 
-})();
-
+// List DriveApps
 async function getDriveApps() {
-
     try {
-
         const apps = await DW_CLIENT.getDriveApps(GROUP_ALIAS, "$orderby=Alias asc");
 
         // Clear loading state, show list
@@ -43,10 +50,8 @@ async function getDriveApps() {
 
         // Loop out DriveApps
         for (const app of apps) {
-
-            const spacedName = app.alias.split(/(?=[A-Z])/).join(" ");
             const markup = `
-                <div class="app-alias">${spacedName}</div>
+                <div class="app-alias">${app.alias}</div>
                 <div class="app-name">${app.name}</div>
             `;
 
@@ -54,15 +59,13 @@ async function getDriveApps() {
             const item = document.createElement("a");
             item.classList.add("app-item");
             item.href = `run.html?app=${app.alias}`;
-            item.title = `Start ${app.alias}`;
+            item.title = `Start '${app.alias}'`;
             item.innerHTML = markup;
 
             APP_LIST.appendChild(item);
         }
-
     } catch (error) {
         console.log(error);
         APP_LIST.innerHTML = "Could not list available DriveApps.";
     }
-
 }
