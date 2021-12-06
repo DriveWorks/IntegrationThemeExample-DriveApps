@@ -23,6 +23,7 @@ async function dwClientLoaded() {
 }
 
 async function init() {
+    setTabTitle(APP_ALIAS);
 
     // Check and set stored session id
     const sessionId = localStorage.getItem("sessionId");
@@ -54,6 +55,8 @@ async function runDriveApp(appAlias) {
 
         // Render DriveApp Form
         await driveApp.render(FORM_OUTPUT);
+
+        // (Optional) Prevent DriveApp timeout from inactivity
         pingDriveApp(driveApp);
     } catch (error) {
         console.log(error);
@@ -88,4 +91,13 @@ function pingDriveApp(driveApp) {
 
     // Schedule next ping
     setTimeout(pingDriveApp, config.driveAppPingInterval * 1000, driveApp);
+}
+
+/**
+ * Set browser tab title
+ * 
+ * @param {Object} text - The text to display in the title.
+ */
+ function setTabTitle(text) {
+    document.title = `${text} | Run - DriveWorks`;
 }
