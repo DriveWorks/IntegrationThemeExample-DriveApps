@@ -1,5 +1,5 @@
 # DriveWorks Live - Integration Theme Example - DriveApps
-### Release: 19.0
+### Release: 19.2
 #### Minimum DriveWorks Version: 18.1
 
 A distributable template that renders a list of available DriveApps to be run - controlled via a config file.
@@ -7,10 +7,16 @@ A distributable template that renders a list of available DriveApps to be run - 
 Please note: DriveWorks are not accepting pull requests for this example.  
 Join our [online community](https://my.driveworks.co.uk) for discussion, resources and to suggest other examples.
 
-### This example:
-- Renders a list of available DriveApps
-- When selected, the DriveApp is rendered on a separate page/tab (run.html)
-- Multiple DriveApps can be launched at once in multiple tabs, using the same session.
+### Overview
+- Dynamically injects the DriveWorks Live Client library script using the configured server url (see config.js).
+    - Provides an example of loading from a static URL, if preferred.
+- Connects to the DriveWorks Live Integration Theme API.
+- 'List' view
+    - Renders a list of available DriveApps to run.
+    - Multiple DriveApps can be launched at once in multiple tabs, using the same session.
+- 'Run' view
+    - When selected, the DriveApp is rendered on a separate template (run.html)
+    - Displays DriveApp alias in tab title.
 
 **Note:** for non-responsive Forms taller than the viewport, remove `.form-output { height: 100vh }` to enable vertical scrolling. This rule ensures Forms fill the viewport by default.
 
@@ -52,6 +58,7 @@ If you are unable to use the dynamic library loading demonstrated in this exampl
         * Ensure you are running DriveWorks 18.2 or above
         * Ensure HTTPS is enabled in DriveWorks Live's settings
         * Ensure a valid SSL certificate has been configured via DriveWorksConfigUser.xml.
+        * Ensure if using an incognito/private window, third-party cookies are not blocked (see browser settings).
         * See [Integration Theme Settings](https://docs.driveworkspro.com/Topic/IntegrationThemeSettings) for additional guidance.
 
 ---
