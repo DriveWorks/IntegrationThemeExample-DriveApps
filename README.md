@@ -1,5 +1,5 @@
 # DriveWorks Live - Integration Theme Example - DriveApps
-### Release: 20.0
+### Release: 20.1
 #### Minimum DriveWorks Version: 18.1
 
 A distributable template that renders a list of available DriveApps to be run - controlled via a config file.
@@ -19,7 +19,7 @@ Join our [online community](https://my.driveworks.co.uk) for discussion, resourc
     - Renders a list of available DriveApps to run.
     - Multiple DriveApps can be launched at once in multiple tabs, using the same session.
 - 'Run' view
-    - When selected, the DriveApp is rendered on a separate template (run.html)
+    - When selected, the DriveApp is rendered on a separate template (run.html).
     - Displays DriveApp alias in tab title.
 
 **Note:** for non-responsive Forms taller than the viewport, remove `.form-output { height: 100vh }` to enable vertical scrolling. This rule ensures Forms fill the viewport by default.
@@ -40,11 +40,11 @@ Join our [online community](https://my.driveworks.co.uk) for discussion, resourc
     * `specificationPingInterval` - [optional] The interval at which to 'ping' the server automatically
         * This ensures a session is kept alive during inactivity, if desired.
 
-3. Ensure that the Integration Theme server is running, using any of the available methods (e.g. Personal Web Edition, DriveWorks Live, IIS)
+3. Ensure that the Integration Theme server is running, using any of the available methods (e.g. Personal Web Edition, DriveWorks Live, IIS).
     * For more information, see [Selecting the Integration Theme](https://docs.driveworkspro.com/Topic/IntegrationThemeSelect).
 
 4. Host the example locally or on a remote server.
-    * Ensure `<corsOrigins>` in DriveWorksConfigUser.xml permits request from this location.
+    * Ensure `<corsOrigins>` in DriveWorksConfigUser.xml permits requests from this location.
     See [Integration Theme Settings](https://docs.driveworkspro.com/Topic/IntegrationThemeSettings) for additional guidance.
 
 ### Troubleshooting:
