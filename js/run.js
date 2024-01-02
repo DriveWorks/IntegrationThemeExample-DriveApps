@@ -81,8 +81,9 @@ function errorWithBackLink(message) {
  * @param driveApp The DriveApp object.
  */
 function pingDriveApp(driveApp) {
-    // Disable ping if interval is 0
-    if (config.driveAppPingInterval === 0) {
+
+    // Disable ping if interval is 0, or not a number
+    if (typeof config.driveAppPingInterval !== "number" || config.driveAppPingInterval === 0) {
         return;
     }
 
