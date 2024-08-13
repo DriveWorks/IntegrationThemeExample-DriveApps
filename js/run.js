@@ -1,6 +1,7 @@
 const SERVER_URL = config.serverUrl;
 const GROUP_ALIAS = config.groupAlias;
 const CREDENTIALS = config.credentials;
+const DRIVE_APP_PING_INTERVAL = config.driveAppPingInterval;
 
 const FORM_OUTPUT = document.getElementById("form-output");
 
@@ -56,8 +57,9 @@ async function runDriveApp(appAlias) {
         // Render DriveApp Form
         await driveApp.render(FORM_OUTPUT);
 
-        // (Optional) Prevent DriveApp timeout from inactivity
-        pingDriveApp(driveApp);
+        // Prevent DriveApp timeout from inactivity, as long as the page is in view.
+        // A DriveApp will timeout after a configured period of inactivity (see DriveWorksConfigUser.xml).
+        driveApp.enableAutoPing(DRIVE_APP_PING_INTERVAL);
     } catch (error) {
         console.log(error);
         FORM_OUTPUT.innerHTML = errorWithBackLink(error);
@@ -73,30 +75,8 @@ function errorWithBackLink(message) {
 }
 
 /**
- * Ping the running DriveApp
- *
- * A DriveApp will timeout after a configured period of inactivity (see DriveWorksConfigUser.xml).
- * This function prevents a DriveApp timing out as long as the page is in view.
- *
- * @param driveApp The DriveApp object.
- */
-function pingDriveApp(driveApp) {
-
-    // Disable ping if interval is 0, or not a number
-    if (typeof config.driveAppPingInterval !== "number" || config.driveAppPingInterval === 0) {
-        return;
-    }
-
-    // Ping DriveApp to reset timeout
-    driveApp.ping();
-
-    // Schedule next ping
-    setTimeout(pingDriveApp, config.driveAppPingInterval * 1000, driveApp);
-}
-
-/**
  * Set browser tab title
- * 
+ *
  * @param {Object} text - The text to display in the title.
  */
  function setTabTitle(text) {
